@@ -1,0 +1,30 @@
+#version: '3.7'
+
+services:
+  db:
+    image: mariadb:10.8.6
+    container_name: mariadb-server
+    hostname: mariadb
+    restart: always
+    networks:
+      docker-net:
+        ipv4_address: 10.10.1.2
+    environment:
+      - MARIADB_ROOT_PASSWORD_FILE=/var/run/secrets/mariadb_root_passwd
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    secrets:
+      - mariadb_root_passwd
+ 
+
+secrets:
+  mariadb_root_passwd:
+    file: /var/lib/docker/volumes/files/secrets/mariadb_root_passwd
+
+volumes:
+  mariadb_data:
+    external: true
+
+networks:
+  docker-net:
+    external: true
