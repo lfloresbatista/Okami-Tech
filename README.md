@@ -20,3 +20,12 @@ Todos los tutoriales y explicaciones están en nuestro canal **OkamiTech**. ¡No
    ```bash
    git clone https://github.com/lfloresbatista/Okami-Tech.git
    cd Okami-Tech
+   ```
+2. **Explora los archivos según el tutorial que estés siguiendo.**
+
+
+
+
+
+   
+   
