@@ -1,0 +1,37 @@
+services:
+  web:
+    image: wordpress:6.7.2-php8.2
+    container_name: wordpress
+    restart: always
+    hostname: www
+    networks:
+      docker-net:
+        ipv4_address: 10.10.1.3
+    #ports: ESTA SECCION NO SE USARA YA QUE UTILIZAREMOS EL NGINX PROXY
+      # -8080:80
+    volumes:
+      - wp_data:/var/www/html
+      - /var/lib/docker/volumes/files/config/php.ini:/var/www/html/php.ini:ro
+    environment:
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_USER=wp_user
+      - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/wp_passwd
+      - WORDPRESS_DB_NAME=wpdb
+      - WORDPRESS_TABLE_PREFIX=okm_
+      - WORDPRESS_DEBUG=0
+      - VIRTUAL_HOST=www.okamistack.com
+      - LETSENCRYPT_HOST=www.okamistack.com
+    secrets:
+      - wp_passwd
+
+secrets:
+  wp_passwd:
+    file: /var/lib/docker/volumes/files/secrets/wp_passwd
+
+networks:
+  docker-net:
+    external: true
+
+volumes:
+  wp_data:
+    external: true
